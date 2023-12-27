@@ -1,0 +1,14 @@
+{
+    "display":[
+        {
+            "page":"home",
+            "display_sections":["name","variation_percentage"]
+        },
+        {
+            "page":"all_stock",
+            "display_sections":["name","variation_percentage","variation_number","latest_price","code","related","rank","history"]
+        }
+    ],
+    "home_tags": ["stocks","followed"],
+    "home_stock_table_rows": 2
+}

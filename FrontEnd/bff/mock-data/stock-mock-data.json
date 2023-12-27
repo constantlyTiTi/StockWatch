@@ -1,0 +1,70 @@
+{
+  "all_stock_details": [
+    {
+      "id": "s0111",
+      "name": "testStock",
+      "variation_percentage": "10%",
+      "variation_number": 2.35,
+      "latest_price": 25.85,
+      "code": "s0111",
+      "related": "",
+      "rank": 1,
+      "history": "pending"
+    },
+    {
+      "id": "s0222",
+      "name": "testStock2",
+      "variation_percentage": "10%",
+      "variation_number": 2.35,
+      "latest_price": 25.85,
+      "code": "s0222",
+      "related": "",
+      "rank": 2,
+      "history": "pending"
+    },
+    {
+      "id": "s0333",
+      "name": "testStock3",
+      "variation_percentage": "10%",
+      "variation_number": 2.35,
+      "latest_price": 25.85,
+      "code": "s0333",
+      "related": "",
+      "rank": 3,
+      "history": "pending"
+    },
+    {
+      "id": "s0444",
+      "name": "testStock4",
+      "variation_percentage": "10%",
+      "variation_number": 2.35,
+      "latest_price": 25.85,
+      "code": "s0444",
+      "related": "",
+      "rank": 2,
+      "history": "pending"
+    },
+    {
+        "id": "s0555",
+        "name": "testStock5",
+        "variation_percentage": "50%",
+        "variation_number": 2.35,
+        "latest_price": 25.85,
+        "code": "s0555",
+        "related": "",
+        "rank": 2,
+        "history": "pending"
+      },
+      {
+        "id": "s0666",
+        "name": "testStock6",
+        "variation_percentage": "-60%",
+        "variation_number": 2.35,
+        "latest_price": 25.85,
+        "code": "s0666",
+        "related": "",
+        "rank": 2,
+        "history": "pending"
+      }
+  ]
+}

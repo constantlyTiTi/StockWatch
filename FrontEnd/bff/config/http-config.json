@@ -1,0 +1,7 @@
+{
+    "options":{
+        "headers": {"X-Custom-Header": "value"}
+
+    },
+    "cors":"http://localhost:3000"
+}

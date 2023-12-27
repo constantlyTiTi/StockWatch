@@ -1,0 +1,12 @@
+{
+    "localizations": [
+        {
+            "localization":"US",
+            "image_url": "https://im.morningstar.com/content/CMSImages/22662.png?format=webp&dpi=1&width=565"
+        },
+        {
+            "localization":"CA",
+            "image_url": "https://s.yimg.com/ny/api/res/1.2/QxpzyY2rNLF2UDh_ICx_Sw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTY0MTtjZj13ZWJw/https://media.zenfs.com/en-US/homerun/motleyfool.com/1764f706016936733ffd144f25f896fe"
+        }       
+    ]
+}

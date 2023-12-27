@@ -1,0 +1,1 @@
+export const GET_ALL_POST = 'http://localhost:3001/all_post'

@@ -1,0 +1,15 @@
+external:
+    api: https://finnhub.io/api/v1/
+    token: cm26o1pr01qvesfhho3gcm26o1pr01qvesfhho40
+spring:
+    kafka:
+        bootstrap-servers: localhost:19092
+        group-Id: group-1
+#    codec:
+#        max-in-memory-size: 10MB
+
+topics:
+    symbols:
+        US: topic_symbols_US
+        CA: topic_symbols_CA
+    stock: topic_allstock

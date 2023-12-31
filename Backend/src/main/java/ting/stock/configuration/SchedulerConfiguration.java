@@ -4,13 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import reactor.core.publisher.Flux;
-import ting.stock.model.StockCurrentPriceWithStockInfo;
-import ting.stock.model.StockModel;
-import ting.stock.services.ExternalStockAPI;
 import ting.stock.services.KafkaProducerService;
-
-import java.util.List;
 
 @Configuration
 @EnableScheduling

@@ -1,0 +1,68 @@
+scalar UUID
+scalar Long
+
+type Stock{
+    stock_id: UUID
+    symbol: String
+    currency: String
+    description: String
+    displaySymbol:String
+    symbol2:String
+    figi:String
+    isin:String
+    mic:String
+    shareClassFIGI:String
+    type:String
+}
+
+type StockDailyPrice{
+    sdp_id: UUID
+    currentPrice:Float
+    datetime: Long
+    symbol:String
+}
+
+type StockWithPrices{
+    stock:Stock
+    prices:[StockDailyPrice]
+}
+
+input StockInput{
+    symbol: String
+    currency: String
+    description: String
+    displaySymbol:String
+    symbol2:String
+    figi:String
+    isin:String
+    mic:String
+    shareClassFIGI:String
+    type:String
+}
+
+input StockDailyPriceInput{
+    currentPrice:Float
+    datetime: Long
+    symbol:String
+}
+
+type Query{
+    queryStockBySymbol(symbol:String!):Stock
+    queryStocksBySymbols(symbol:[String!]):[Stock]
+    queryPricesByDateTime(symbol:String,stateDate:Long, endDate:Long):[StockWithPrices]
+}
+type Mutation{
+    createStock(stock:StockInput!):Stock
+    createBulkStocks(stocks:[StockInput!]!):[Stock]
+    createStockDailyPrice(stockDailyPrice:StockDailyPriceInput!):StockDailyPrice
+    createBulkStockDailyPrice(stockDailyPrices:[StockDailyPriceInput!]!): [StockDailyPrice]
+    deleteStock(stockId:UUID!):String
+    deleteStockDailyPriceByIds(dailyPriceIds:[String!]!):[UUID]
+}
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+
+

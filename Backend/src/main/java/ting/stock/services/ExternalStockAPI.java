@@ -1,10 +1,6 @@
 package ting.stock.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,10 +9,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ting.stock.configuration.ExternalAPIIntegration;
-import ting.stock.dto.StockWithDailyPricesDto;
+import ting.stock.dto.StockConcurrentPriceDto;
+import ting.stock.dto.StockDto;
 import ting.stock.exceptions.OverLimitedRequestsException;
-import ting.stock.model.StockConcurrentPriceModel;
-import ting.stock.model.StockModel;
+import ting.stock.graphqlResolvers.StockDailyPriceResolver;
+import ting.stock.graphqlResolvers.StockResolver;
+import ting.stock.repositories.StockDailyPriceRepository;
+import ting.stock.repositories.StockRepository;
 
 import java.util.List;
 
@@ -26,9 +25,13 @@ public class ExternalStockAPI {
 
     private WebClient stockExternalApi;
     private ExternalAPIIntegration externalAPIIntegration;
+    private StockDailyPriceRepository stockDailyPriceRepository;
+    private StockRepository stockRepository;
+    private StockDailyPriceResolver stockDailyPriceResolver;
+    private StockResolver stockResolver;
 
 
-    public Mono<StockConcurrentPriceModel> getStockBySymbol(String symbol){
+    public Mono<StockConcurrentPriceDto> getStockBySymbol(String symbol){
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("symbol", symbol);
@@ -38,7 +41,7 @@ public class ExternalStockAPI {
                         uriBuilder.path("/quote").queryParams(params).build())
                 .exchangeToMono(response -> {
                     if(response.statusCode().equals(HttpStatus.OK)){
-                        return response.bodyToMono(StockConcurrentPriceModel.class);
+                        return response.bodyToMono(StockConcurrentPriceDto.class);
                     }else if(response.statusCode() == HttpStatus.TOO_MANY_REQUESTS){
                         throw new OverLimitedRequestsException();
                     }else{
@@ -47,7 +50,7 @@ public class ExternalStockAPI {
                 });
     }
 
-    public Mono<List<StockModel>> getAllSymbolsByCountry(String country){
+    public Mono<List<StockDto>> getAllSymbolsByCountry(String country){
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("exchange", country);

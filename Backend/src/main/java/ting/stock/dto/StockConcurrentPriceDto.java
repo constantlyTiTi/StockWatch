@@ -1,13 +1,15 @@
-package ting.stock.model;
+package ting.stock.dto;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.*;
 
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StockConcurrentPriceModel {
+public class StockConcurrentPriceDto {
     @Setter(onMethod_ = {@JsonSetter(value = "c")})
     @Getter(onMethod_ = {@JsonGetter(value = "current_price")})
     private float currentPrice;

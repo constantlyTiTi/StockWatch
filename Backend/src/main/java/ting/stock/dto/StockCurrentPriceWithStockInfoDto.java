@@ -1,4 +1,4 @@
-package ting.stock.model;
+package ting.stock.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class StockCurrentPriceWithStockInfo {
-    private StockModel stock;
-    private StockConcurrentPriceModel stockConcurrentPriceModel;
+public class StockCurrentPriceWithStockInfoDto {
+    private StockDto stock;
+    private StockConcurrentPriceDto stockConcurrentPriceDto;
 }

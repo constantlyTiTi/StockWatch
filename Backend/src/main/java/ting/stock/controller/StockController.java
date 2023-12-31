@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import ting.stock.model.StockConcurrentPriceModel;
-import ting.stock.model.StockModel;
+import ting.stock.dto.StockConcurrentPriceDto;
+import ting.stock.dto.StockDto;
 import ting.stock.services.ExternalStockAPI;
 
 import java.util.List;
@@ -20,14 +20,14 @@ public class StockController {
     final private ExternalStockAPI externalStockAPI;
 
     @GetMapping("/quote")
-    public StockConcurrentPriceModel getAllStockBySymbol(@RequestParam String symbol){
-        Mono<StockConcurrentPriceModel> stockCurrentPrice = externalStockAPI.getStockBySymbol(symbol);
+    public StockConcurrentPriceDto getAllStockBySymbol(@RequestParam String symbol){
+        Mono<StockConcurrentPriceDto> stockCurrentPrice = externalStockAPI.getStockBySymbol(symbol);
         return stockCurrentPrice.block();
     }
 
     @GetMapping("/symbols")
-    public List<StockModel> getAllSymbolsByCountry(@RequestParam String country){
-        Mono<List<StockModel>> result = externalStockAPI.getAllSymbolsByCountry(country);
+    public List<StockDto> getAllSymbolsByCountry(@RequestParam String country){
+        Mono<List<StockDto>> result = externalStockAPI.getAllSymbolsByCountry(country);
         return result.block();
     }
 }

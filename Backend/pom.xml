@@ -118,9 +118,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${mvn.version}</version>
 				<configuration>
-<!--					<image>-->
-<!--						<builder>paketobuildpacks/builder-jammy-base:latest</builder>-->
-<!--					</image>-->
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

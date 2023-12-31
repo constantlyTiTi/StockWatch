@@ -12,10 +12,6 @@ import ting.stock.configuration.ExternalAPIIntegration;
 import ting.stock.dto.StockConcurrentPriceDto;
 import ting.stock.dto.StockDto;
 import ting.stock.exceptions.OverLimitedRequestsException;
-import ting.stock.graphqlResolvers.StockDailyPriceResolver;
-import ting.stock.graphqlResolvers.StockResolver;
-import ting.stock.repositories.StockDailyPriceRepository;
-import ting.stock.repositories.StockRepository;
 
 import java.util.List;
 
@@ -25,10 +21,6 @@ public class ExternalStockAPI {
 
     private WebClient stockExternalApi;
     private ExternalAPIIntegration externalAPIIntegration;
-    private StockDailyPriceRepository stockDailyPriceRepository;
-    private StockRepository stockRepository;
-    private StockDailyPriceResolver stockDailyPriceResolver;
-    private StockResolver stockResolver;
 
 
     public Mono<StockConcurrentPriceDto> getStockBySymbol(String symbol){

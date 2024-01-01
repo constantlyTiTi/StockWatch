@@ -31,4 +31,9 @@ public class StockDailyPriceResolver {
     public List<StockDailyPrice> queryPricesByDateTime (@Argument String symbol, @Argument Long startDateTime, @Argument Long endDateTime){
         return stockDailyPriceRepository.queryPriceBySymbolAndDateTime(symbol,startDateTime,endDateTime);
     }
+
+    @SchemaMapping
+    public List<StockDailyPrice> queryPricesBySymbols (@Argument List<String> symbols){
+        return stockDailyPriceRepository.queryPricesBySymbols(symbols);
+    }
 }

@@ -12,12 +12,12 @@ import ting.stock.services.KafkaProducerService;
 public class SchedulerConfiguration {
     private final KafkaProducerService kafkaProducerService;
 
-    @Scheduled(fixedDelay = 100000)
+    @Scheduled(fixedDelay = 600000)
     public void schedulePublishUSSymbols() {
         kafkaProducerService.getLatestSymbolAndPublish("US");
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 50000)
     public void schedulePublishStocksInfo() {
         kafkaProducerService.getAllRealTimeStockInfoAndPublish();
     }

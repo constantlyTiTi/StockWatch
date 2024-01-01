@@ -1,5 +1,5 @@
 scalar UUID
-scalar Long
+scalar DateTime
 
 type Stock{
     stock_id: UUID
@@ -18,7 +18,7 @@ type Stock{
 type StockDailyPrice{
     sdp_id: UUID
     currentPrice:Float
-    datetime: Long
+    datetime: DateTime
     symbol:String
 }
 
@@ -42,14 +42,15 @@ input StockInput{
 
 input StockDailyPriceInput{
     currentPrice:Float
-    datetime: Long
+    datetime: DateTime
     symbol:String
 }
 
 type Query{
     queryStockBySymbol(symbol:String!):Stock
     queryStocksBySymbols(symbol:[String!]):[Stock]
-    queryPricesByDateTime(symbol:String,stateDate:Long, endDate:Long):[StockWithPrices]
+    queryPricesByDateTime(symbol:String,stateDate:DateTime, endDate:DateTime):[StockWithPrices]
+    queryPricesBySymbols(symbols:[String!]):[StockWithPrices]
 }
 type Mutation{
     createStock(stock:StockInput!):Stock

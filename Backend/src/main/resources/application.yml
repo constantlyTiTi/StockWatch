@@ -4,7 +4,10 @@ external:
 spring:
     kafka:
         bootstrap-servers: localhost:19092
-        group-Id: group-1
+        group-Id-stock-info-db: group-stock-info-db
+        group-Id-stock-info-fe: group-stock-info-fe
+        group-Id-stock-price-db: group-stock-price-db
+        group-Id-stock-price-fe: group-stock-price-fe
     datasource:
         url: jdbc:h2:mem:testdb
         driverClassName: org.h2.Driver

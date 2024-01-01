@@ -36,11 +36,11 @@ public class KafkaProducerConfiguration {
 
     @Bean
     public KafkaTemplate<String, List<StockDto>> kafkaProducerSymbolsTemplate() {
-        return new KafkaTemplate<String,List<StockDto>>(producerFactory());
+        return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
     public KafkaTemplate<String, List<StockCurrentPriceWithStockInfoDto>> kafkaProducerStocksTemplate() {
-        return new KafkaTemplate<String,List<StockCurrentPriceWithStockInfoDto>>(producerFactory());
+        return new KafkaTemplate<>(producerFactory());
     }
 }

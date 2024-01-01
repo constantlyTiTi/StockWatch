@@ -1,15 +1,18 @@
 package ting.stock.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 public class StockCurrentPriceWithStockInfoDto {
-    private StockDto stock;
-    private StockConcurrentPriceDto stockConcurrentPriceDto;
+    @JsonProperty("StockDto")
+    private StockDto stockDto;
+    @JsonProperty("StockConcurrentPriceDtos")
+    private List<StockConcurrentPriceDto> stockConcurrentPriceDtos;
 }

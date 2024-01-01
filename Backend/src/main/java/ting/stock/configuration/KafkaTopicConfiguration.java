@@ -30,15 +30,15 @@ public class KafkaTopicConfiguration {
 
     @Bean
     public NewTopic stockUSSymbolTopic() {
-        return new NewTopic(topicConfiguration.getSymbols().get("US"),1, (short) 3);
+        return new NewTopic(topicConfiguration.getSymbols().get("US"),3, (short) 3);
     }
 
     @Bean
     public NewTopic stockCanadaSymbolTopic() {
-        return new NewTopic(topicConfiguration.getSymbols().get("CA"),1, (short) 3);
+        return new NewTopic(topicConfiguration.getSymbols().get("CA"),3, (short) 3);
     }
 
     @Bean NewTopic stockQuoteTopic(){
-        return new NewTopic(topicConfiguration.getStock(),1, (short) 3);
+        return new NewTopic(topicConfiguration.getStock(),3, (short) 3);
     }
 }

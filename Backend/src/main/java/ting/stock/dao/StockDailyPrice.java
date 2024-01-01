@@ -1,9 +1,7 @@
 package ting.stock.dao;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +11,8 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @Getter
+@Setter
+@NoArgsConstructor
 public class StockDailyPrice {
     private static final long serialVersionUID = 1L;
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,4 @@ public class StockDailyPrice {
     private LocalDateTime datetime;
     @Column(name="symbol")
     private String symbol;
-    @ManyToOne
-    @JoinColumn(name = "stock_symbol", nullable = false, updatable = false, referencedColumnName = "symbol")
-    private Stock stock;
 }

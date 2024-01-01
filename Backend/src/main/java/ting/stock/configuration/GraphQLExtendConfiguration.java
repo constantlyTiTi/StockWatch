@@ -9,7 +9,7 @@ import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 public class GraphQLExtendConfiguration {
     @Bean
     public RuntimeWiringConfigurer runtimeWiringConfigurer() {
-        return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.GraphQLLong)
+        return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.DateTime)
                 .scalar(ExtendedScalars.UUID);
     }
 }

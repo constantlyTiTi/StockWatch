@@ -12,4 +12,7 @@ import java.util.UUID;
 public interface StockDailyPriceRepository extends JpaRepository<StockDailyPrice, UUID> {
     @Query("SELECT sdp FROM stock_daily_price sdp WHERE sdp.symbol = ?1 and sdp.datetime >= ?2 and sdp.datetime < ?3")
     List<StockDailyPrice> queryPriceBySymbolAndDateTime(String symbol, Long startDateTime, Long endDateTime);
+
+    @Query("SELECT sdp FROM stock_daily_price sdp WHERE sdp.symbol IN (?1)")
+    List<StockDailyPrice> queryPricesBySymbols(List<String> symbols);
 }

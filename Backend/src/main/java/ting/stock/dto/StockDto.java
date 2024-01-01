@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.*;
 import ting.stock.dao.Stock;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -38,16 +40,38 @@ public class StockDto {
     private String type;
 
     public boolean dtoValueEqualDaoValue(Stock stock){
-        return this.currency.equals(stock.getCurrency()) &&
-                this.description.equals(stock.getDescription()) &&
-                this.displaySymbol.equals(stock.getDisplaySymbol()) &&
-                this.symbol.equals(stock.getSymbol()) &&
-                this.symbol2.equals(stock.getSymbol2()) &&
-                this.figi.equals(stock.getFigi()) &&
-                this.isin.equals(stock.getIsin()) &&
-                this.mic.equals(stock.getMic()) &&
-                this.shareClassFIGI.equals(stock.getShareClassFIGI()) &&
-                this.type.equals(stock.getType());
+        if(Objects.isNull(stock)) return false;
+        if(Objects.nonNull(this.currency) && !this.currency.equals(stock.getCurrency())){
+            return false;
+        }
+        if(Objects.nonNull(this.description) && !this.description.equals(stock.getDescription())){
+            return false;
+        }
+        if(Objects.nonNull(this.displaySymbol) && !this.displaySymbol.equals(stock.getDisplaySymbol())){
+            return false;
+        }
+        if(Objects.nonNull(this.symbol) && !this.symbol.equals(stock.getSymbol())){
+            return false;
+        }
+        if(Objects.nonNull(this.symbol2) && !this.symbol2.equals(stock.getSymbol2())){
+            return false;
+        }
+        if(Objects.nonNull(this.figi) && !this.figi.equals(stock.getFigi())){
+            return false;
+        }
+        if(Objects.nonNull(this.isin) && !this.isin.equals(stock.getIsin())){
+            return false;
+        }
+        if(Objects.nonNull(this.mic) && !this.mic.equals(stock.getMic())){
+            return false;
+        }
+        if(Objects.nonNull(this.shareClassFIGI) && !this.shareClassFIGI.equals(stock.getShareClassFIGI())){
+            return false;
+        }
+        if(Objects.nonNull(this.type) && !this.type.equals(stock.getType())){
+            return false;
+        }
+        return true;
     }
 
 

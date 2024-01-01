@@ -14,4 +14,5 @@ import java.util.Map;
 public class TopicConfiguration {
     private Map<String, String> symbols;
     private String stock;
+    private Map<String,String> webSocket;
 }

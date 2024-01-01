@@ -27,3 +27,6 @@ topics:
         US: topic_symbols_US
         CA: topic_symbols_CA
     stock: topic_allstock
+    webSocket:
+        ws-symbols-fe: /bff/symbols
+        ws-prices-fe: /bff/prices

@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import ting.stock.configuration.TopicConfiguration;
 import ting.stock.dao.Stock;
 import ting.stock.dao.StockDailyPrice;
 import ting.stock.dto.StockCurrentPriceWithStockInfoDto;
@@ -24,12 +27,16 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@ConfigurationProperties
 public class KafkaConsumerService {
 
     private final StockResolver stockResolver;
     private final StockMapper stockMapper;
     private final StockConcurrentDtoMapper stockConcurrentDtoMapper;
     private final StockDailyPriceResolver stockDailyPriceResolver;
+    private final TopicConfiguration topicConfiguration;
+
+    private final SimpMessagingTemplate messagingTemplate;
 
     @KafkaListener(topics = "#{'${topics.symbols.US}'}", groupId = "#{'{spring.kafka.group-Id-stock-info-db'}", concurrency = "3")
     public void stockSymbolConsumer(String stocksJson) throws JsonProcessingException {
@@ -63,17 +70,9 @@ public class KafkaConsumerService {
     }
 
     @KafkaListener(topics = "#{'${topics.symbols.US}'}", groupId = "#{'{spring.kafka.group-Id-stock-info-fe'}", concurrency = "3")
-    public void stockSymbolFEConsumer(String stocksJson) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        List<StockDto> stocks = mapper.readValue(stocksJson, new TypeReference<List<StockDto>>(){});
-        assert stocks != null;
-        List<String> symbols = stocks.stream().map(StockDto::getSymbol).toList();
-
-        Map<String, StockDto> stock_in = stocks.stream().collect(Collectors.toMap(StockDto::getSymbol, Function.identity()));
-
-        //send to fe
-        System.out.print("fe");
-
+    public void stockSymbolFEConsumer(String stocksJson) {
+        String WEB_SOCKET_SYMBOL_TOPIC = "ws-symbols-fe";
+        messagingTemplate.convertAndSend(topicConfiguration.getWebSocket().get(WEB_SOCKET_SYMBOL_TOPIC),stocksJson);
     }
 
     @KafkaListener(topics = "#{'${topics.stock}'}", groupId = "#{'{spring.kafka.group-Id-stock-price-db'}", concurrency = "3")
@@ -93,15 +92,10 @@ public class KafkaConsumerService {
     }
 
     @KafkaListener(topics = "#{'${topics.stock}'}", groupId = "#{'{spring.kafka.group-Id-stock-price-fe'}", concurrency = "3")
-    public void stocksPricesFEConsumer(String stockPriceJson) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        List<StockCurrentPriceWithStockInfoDto> dtos = mapper.readValue(stockPriceJson, new TypeReference<>() {});
-        List<StockDailyPrice> sdps = dtos.stream().map(d -> {
-            StockDailyPrice dr = stockConcurrentDtoMapper.dtoToDao(d.getStockConcurrentPriceDtos().get(0));
-            return dr;
-        }).toList();
+    public void stocksPricesFEConsumer(String stockPriceJson) {
         //send to fe
-
+        String WEB_SOCKET_PRICES_TOPIC = "ws-prices-fe";
+        messagingTemplate.convertAndSend(topicConfiguration.getWebSocket().get(WEB_SOCKET_PRICES_TOPIC),stockPriceJson);
     }
 
 }

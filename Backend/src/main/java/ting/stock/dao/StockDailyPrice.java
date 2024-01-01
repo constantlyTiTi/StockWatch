@@ -24,4 +24,8 @@ public class StockDailyPrice {
     private LocalDateTime datetime;
     @Column(name="symbol")
     private String symbol;
+    @Column(name="change")
+    private float change;
+    @Column(name="percentChange")
+    private float percentChange;
 }

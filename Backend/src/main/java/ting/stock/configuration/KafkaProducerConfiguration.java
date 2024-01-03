@@ -10,8 +10,8 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import ting.stock.dto.StockCurrentPriceWithStockInfoDto;
 import ting.stock.dto.StockDto;
+import ting.stock.dto.StockWithPricesDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +40,7 @@ public class KafkaProducerConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<String, List<StockCurrentPriceWithStockInfoDto>> kafkaProducerStocksTemplate() {
+    public KafkaTemplate<String, List<StockWithPricesDto>> kafkaProducerStocksTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

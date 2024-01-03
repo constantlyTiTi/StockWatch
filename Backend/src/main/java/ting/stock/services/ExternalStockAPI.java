@@ -9,8 +9,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ting.stock.configuration.ExternalAPIIntegration;
-import ting.stock.dto.StockConcurrentPriceDto;
 import ting.stock.dto.StockDto;
+import ting.stock.dto.StockPriceDto;
 import ting.stock.exceptions.OverLimitedRequestsException;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class ExternalStockAPI {
     private ExternalAPIIntegration externalAPIIntegration;
 
 
-    public Mono<StockConcurrentPriceDto> getStockBySymbol(String symbol){
+    public Mono<StockPriceDto> getStockBySymbol(String symbol){
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("symbol", symbol);
@@ -33,7 +33,7 @@ public class ExternalStockAPI {
                         uriBuilder.path("/quote").queryParams(params).build())
                 .exchangeToMono(response -> {
                     if(response.statusCode().equals(HttpStatus.OK)){
-                        return response.bodyToMono(StockConcurrentPriceDto.class);
+                        return response.bodyToMono(StockPriceDto.class);
                     }else if(response.statusCode() == HttpStatus.TOO_MANY_REQUESTS){
                         throw new OverLimitedRequestsException();
                     }else{

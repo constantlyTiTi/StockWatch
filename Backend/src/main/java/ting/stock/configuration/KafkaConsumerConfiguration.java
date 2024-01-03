@@ -12,8 +12,8 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import ting.stock.dto.StockCurrentPriceWithStockInfoDto;
 import ting.stock.dto.StockDto;
+import ting.stock.dto.StockWithPricesDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,7 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
-    public ConsumerFactory<String, StockCurrentPriceWithStockInfoDto> stockPriceConsumerFactory() {
+    public ConsumerFactory<String, StockWithPricesDto> stockPriceConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -89,10 +89,10 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, StockCurrentPriceWithStockInfoDto>
+    public ConcurrentKafkaListenerContainerFactory<String, StockWithPricesDto>
     kafkaListenStockChanges() {
 
-        ConcurrentKafkaListenerContainerFactory<String, StockCurrentPriceWithStockInfoDto> factory =
+        ConcurrentKafkaListenerContainerFactory<String, StockWithPricesDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(stockPriceConsumerFactory());
         return factory;

@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import ting.stock.configuration.TopicConfiguration;
 import ting.stock.dao.Stock;
 import ting.stock.dao.StockDailyPrice;
-import ting.stock.dto.StockCurrentPriceWithStockInfoDto;
 import ting.stock.dto.StockDto;
+import ting.stock.dto.StockWithPricesDto;
 import ting.stock.graphqlResolvers.StockDailyPriceResolver;
 import ting.stock.graphqlResolvers.StockResolver;
-import ting.stock.mapper.StockConcurrentDtoMapper;
 import ting.stock.mapper.StockMapper;
+import ting.stock.mapper.StockPriceDtoMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,7 +32,7 @@ public class KafkaConsumerService {
 
     private final StockResolver stockResolver;
     private final StockMapper stockMapper;
-    private final StockConcurrentDtoMapper stockConcurrentDtoMapper;
+    private final StockPriceDtoMapper stockConcurrentDtoMapper;
     private final StockDailyPriceResolver stockDailyPriceResolver;
     private final TopicConfiguration topicConfiguration;
 
@@ -78,9 +78,9 @@ public class KafkaConsumerService {
     @KafkaListener(topics = "#{'${topics.stock}'}", groupId = "#{'{spring.kafka.group-Id-stock-price-db'}", concurrency = "3")
     public void stocksPricesConsumer(String stockPriceJson) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        List<StockCurrentPriceWithStockInfoDto> dtos = mapper.readValue(stockPriceJson, new TypeReference<>() {});
+        List<StockWithPricesDto> dtos = mapper.readValue(stockPriceJson, new TypeReference<>() {});
         List<StockDailyPrice> sdps = dtos.stream().map(d -> {
-            StockDailyPrice dr = stockConcurrentDtoMapper.dtoToDao(d.getStockConcurrentPriceDtos().get(0));
+            StockDailyPrice dr = stockConcurrentDtoMapper.dtoToDao(d.getStockPriceDtos().get(0));
             Stock sr = stockMapper.dtoToDao(d.getStockDto());
             dr.setSymbol(sr.getSymbol());
             dr.setDatetime(LocalDateTime.now());
@@ -95,6 +95,7 @@ public class KafkaConsumerService {
     public void stocksPricesFEConsumer(String stockPriceJson) {
         //send to fe
         String WEB_SOCKET_PRICES_TOPIC = "ws-prices-fe";
+        System.out.println(stockPriceJson);
         messagingTemplate.convertAndSend(topicConfiguration.getWebSocket().get(WEB_SOCKET_PRICES_TOPIC),stockPriceJson);
     }
 

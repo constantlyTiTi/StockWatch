@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class StockCurrentPriceWithStockInfoDto {
+public class StockWithPricesDto {
     @JsonProperty("StockDto")
     private StockDto stockDto;
     @JsonProperty("StockConcurrentPriceDtos")
-    private List<StockConcurrentPriceDto> stockConcurrentPriceDtos;
+    private List<StockPriceDto> stockPriceDtos;
 }

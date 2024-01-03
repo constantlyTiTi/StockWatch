@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StockConcurrentPriceDto {
+public class StockPriceDto {
 
     @Setter(onMethod_ = {@JsonAlias({"c", "current_price"})})
     @Getter(onMethod_ = {@JsonGetter(value = "current_price")})

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Level;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import ting.stock.configuration.ExternalAPIIntegration;
 import ting.stock.configuration.TopicConfiguration;
 import ting.stock.dto.StockDto;
 import ting.stock.dto.StockWithPricesDto;
@@ -21,6 +22,7 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, List<StockWithPricesDto>> kafkaProducerStocksTemplate;
     private final TopicConfiguration topicConfiguration;
     private final ExternalStockAPI externalStockAPI;
+    private final ExternalAPIIntegration externalAPIIntegration;
 
     public void getLatestSymbolAndPublish(String country) {
         try{
@@ -34,12 +36,15 @@ public class KafkaProducerService {
 
     }
 
-    //only get first 10 stocks due to api limitation
+    //only get limited stocks due to api limitation
     public void getAllRealTimeStockInfoAndPublish() {
         try{
             List<StockDto> stocks = externalStockAPI.getAllSymbolsByCountry("US").block();
             assert stocks != null;
-            List<String> symbols = stocks.stream().map(StockDto::getSymbol).sorted().toList().subList(0,10);
+            List<String> symbols = externalAPIIntegration.getSymbols();
+            if(symbols.isEmpty()){
+                symbols = stocks.stream().map(StockDto::getSymbol).sorted().toList().subList(0,8);
+            }
             try{
                 Flux<StockWithPricesDto> stockPriceAndInfoList = Flux.fromIterable(symbols).flatMap(sy ->
                         externalStockAPI.getStockBySymbol(sy)

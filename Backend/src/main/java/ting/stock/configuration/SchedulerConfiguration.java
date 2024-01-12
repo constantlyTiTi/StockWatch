@@ -17,7 +17,7 @@ public class SchedulerConfiguration {
         kafkaProducerService.getLatestSymbolAndPublish("US");
     }
 
-    @Scheduled(fixedDelay = 50000)
+    @Scheduled(fixedDelay = 30000)
     public void schedulePublishStocksInfo() {
         kafkaProducerService.getAllRealTimeStockInfoAndPublish();
     }

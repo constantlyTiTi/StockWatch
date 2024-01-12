@@ -1,6 +1,15 @@
 external:
     api: https://finnhub.io/api/v1/
     token: cm26o1pr01qvesfhho3gcm26o1pr01qvesfhho40
+    symbols:
+        - AAPL
+        - AMZN
+        - BIT
+        - TQQQ
+        - YINN
+        - WMT
+        - KO
+        - CSCO
 spring:
     kafka:
         bootstrap-servers: localhost:19092

@@ -3,6 +3,7 @@ package ting.stock.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import ting.stock.configuration.ExternalAPIIntegration;
 import ting.stock.dao.Stock;
 import ting.stock.dao.StockDailyPrice;
 import ting.stock.dto.StockDto;
@@ -23,6 +24,7 @@ public class StockService {
     private final StockDailyPriceResolver stockDailyPriceResolver;
     private final StockWithPricesDtoMapper stockCurrentPriceWithStockInfoDtoMapper;
     private final ExternalStockAPI externalStockAPI;
+    private final ExternalAPIIntegration externalAPIIntegration;
 
     public List<StockWithPricesDto> getStockHistoryPricesInfoBySymbols(String... symbols){
         List<String> symbolList = Arrays.stream(symbols).toList();
@@ -42,10 +44,14 @@ public class StockService {
 
     }
 
+    //only get limited stocks due to api limitation
     public List<StockWithPricesDto> getStockWithCurrentPrice(){
         List<StockDto> stocks = externalStockAPI.getAllSymbolsByCountry("US").block();
         assert stocks != null;
-        List<String> symbols = stocks.stream().map(StockDto::getSymbol).sorted().toList().subList(0,10);
+        List<String> symbols = externalAPIIntegration.getSymbols();
+        if(symbols.isEmpty()){
+            symbols = stocks.stream().map(StockDto::getSymbol).sorted().toList().subList(0,8);
+        }
         Flux<StockWithPricesDto> stockPriceAndInfoList = Flux.fromIterable(symbols).flatMap(sy ->
                 externalStockAPI.getStockBySymbol(sy)
                         .map(response -> StockWithPricesDto.builder()

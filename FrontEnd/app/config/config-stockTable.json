@@ -2,13 +2,13 @@
     "display":[
         {
             "page":"home",
-            "display_sections":["name","variation_percentage"]
+            "display_sections":["symbol","current_price","percent_change","open_price","previous_closed_price"]
         },
         {
             "page":"all_stock",
-            "display_sections":["name","variation_percentage","variation_number","latest_price","code","related","rank","history"]
+            "display_sections":["symbol","current_price","percent_change","description"]
         }
     ],
     "home_tags": ["stocks","followed"],
-    "home_stock_table_rows": 2
+    "home_stock_table_rows": 10
 }

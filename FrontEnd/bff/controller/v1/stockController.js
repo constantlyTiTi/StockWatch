@@ -2,7 +2,6 @@
 const stockService = require('../../services/v1/stockService.js')
 
 exports.getAllStockDetails = async (req,res)=> {
-    console.log("stockController")
     try{
         res.send(await stockService.getAllStockDetailsService())
         
@@ -10,6 +9,24 @@ exports.getAllStockDetails = async (req,res)=> {
     catch(error){
         return "error"
     }
+}
 
-    
+exports.getHistoryPricesBySymbol = async (req,res)=> {
+    try{
+        res.send(await stockService.getHistoryPricesBySymbol(req.symbol))
+        
+    }
+    catch(error){
+        return "error"
+    }
+}
+
+exports.getStocksWithCurrentPrice = async (req,res)=> {
+    try{
+        res.send(await stockService.getStocksWithCurrentPriceService())
+        
+    }
+    catch(error){
+        return "error"
+    }
 }

@@ -1,11 +1,11 @@
 export interface TableColCustProps {
-    id: string,
+    symbol: string,
     colName: string,
     content: string,
 }
 
 export interface TableColGridProps{
-    id: string,
+    symbol: string,
     colName: string,
     content: string,
     xs:number

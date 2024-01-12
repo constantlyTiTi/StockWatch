@@ -1,4 +1,4 @@
-import { AppBar, Box, IconButton, Toolbar, Typography, alpha, styled } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography, alpha, appBarClasses, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 
@@ -6,9 +6,9 @@ import InputBase from "@mui/material/InputBase";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.success.light, 0.15),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.success.light, 0.25),
   },
   marginLeft: 0,
   width: "100%",
@@ -48,7 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const HeaderSearchBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
+      <AppBar sx={{ bgcolor: "green" }}>
         <Toolbar>
           {/* <IconButton
             size="large"

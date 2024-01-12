@@ -3,10 +3,10 @@ import TableCell from "@mui/material/TableCell";
 
 const StockTableCol: React.FC<TableColCustProps> = (props) => {
     const content = props.content;
-    const id = props.id;
+    const symbol = props.symbol;
   
     return (
-      <TableCell id={`col-${id}`} >
+      <TableCell id={`col-${symbol}`} >
         {content}
       </TableCell>
     );

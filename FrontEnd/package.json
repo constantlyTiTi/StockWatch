@@ -17,6 +17,8 @@
     "@mui/x-data-grid": "^6.18.2",
     "@nestjs/common": "^10.2.10",
     "@reduxjs/toolkit": "^2.0.1",
+    "@stomp/stompjs": "^7.0.0",
+    "@typetron/websockets": "^0.4.0-rc9",
     "axios": "^0.24.0",
     "chart.js": "^4.4.1",
     "cors": "^2.8.5",
@@ -26,12 +28,16 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-redux": "^9.0.4",
-    "react-use-websocket": "^4.5.0"
+    "react-use-websocket": "^4.5.0",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/ws": "^8.5.10",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",

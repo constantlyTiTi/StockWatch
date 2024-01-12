@@ -1,6 +1,6 @@
-import { StockInfo, StockPriceInterface } from "@/app/Interfaces/table/StockInfoInterface";
+import { StockInfo } from "@/app/Interfaces/table/StockInfoInterface";
 import axios from "axios";
-import {GET_ALL_STOCK,GET_STOCK_BY_SYMBOL} from './stockURLs'
+import {GET_ALL_STOCK,GET_STOCK_BY_SYMBOL, GET_STOCKS_CURRENT_PRICE} from './stockURLs'
 import httpConfig from '../config/config-http.json'
 
 export const getAllStockInfo = () =>{
@@ -12,7 +12,29 @@ export const getAllStockInfo = () =>{
 
     .then((res) => {
       const stocks = res.data.all_stock_details.map((d: StockInfo) => new StockInfo(d))
-      console.log("fe stock",stocks)
+      return stocks
+
+    })
+    .catch((error) => {
+      return [new StockInfo(undefined)]
+    })
+
+    return response
+
+}
+
+export const getStocksWithPrices = () =>{
+  
+  const response = 
+    axios.get(GET_STOCKS_CURRENT_PRICE,{
+      headers:httpConfig.headers
+    })
+
+    .then((res) => {
+      const stocks = res.data.stocks_with_prices.map((d: {StockDto:any,StockConcurrentPriceDtos:StockInfo[]}) => (new StockInfo({
+        ...d.StockDto,
+        ...d.StockConcurrentPriceDtos[0]
+      })))
       return stocks
 
     })
@@ -34,12 +56,10 @@ export const getStockBySymbol = async (symbol:string) =>{
 
     .then((res) => {
       const stock = res.data as StockInfo
-      console.log("fe stock",stock.symbol)
       return stock
 
     })
     .catch((error) => {
-      console.log("fe-error",error)
       return error
     })
 

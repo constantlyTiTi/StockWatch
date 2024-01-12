@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { HeaderSearchBar } from './components/searchBar'
+import { Banner } from './components/banner'
+import { Box } from '@mui/material'
+import { Suspense } from 'react'
+import Loading from './loading'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Box sx={{ flexGrow: 1, p: 2, maxWidth: 1500, marginLeft: "auto", marginRight: "auto", height: "100vh" }}>
+          <HeaderSearchBar />
+          <Banner />
+          <Suspense fallback={<Loading/>}>
+          {children}
+          </Suspense>
+        </Box>
+      </body>
     </html>
   )
 }

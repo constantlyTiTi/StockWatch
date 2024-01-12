@@ -59,38 +59,34 @@ const StockListTable = () => {
   useEffect(() => {
     if (!tableRows || tableRows.length == 0) {
       fetchData();
-      const socket = new WebSocket("ws://localhost:8080/ws")
-      socket.onerror = function(error) {
-        alert(`[error]`);
+
+      const stompClient = new StompJs.Client({
+        brokerURL: "ws://localhost:8080/ws"
+      });
+
+      stompClient.onConnect = (frame) => {
+        console.log("Connected: " + frame);
+        stompClient.subscribe("/bff/prices", (data) => {
+          const dataConvert = JSON.parse(data.body);
+          const stockRows = dataConvert.map((d: {StockDto:any,StockConcurrentPriceDtos:StockInfo[]}) => (new StockInfo({
+            ...d.StockDto,
+            ...d.StockConcurrentPriceDtos[0]
+          }))).map((s: StockInfo) => ({
+            stock_info: s,
+            page: "home",
+            spacing: 2,
+          }));
+          console.log("dataJson",dataConvert)
+  
+          dispatch({
+            type: GET_ALL_STOCKS_INFO,
+            payload: stockRows,
+          });
+          setTableRows(stockRows);
+        });
       };
 
-
-      // const stompClient = new StompJs.Client({
-      //   brokerURL: "ws://localhost:8080/ws"
-      // });
-
-      // stompClient.onConnect = (frame) => {
-      //   console.log("Connected: " + frame);
-      //   stompClient.subscribe("bff/ws-prices-fe", (data) => {
-      //     const dataJson = JSON.parse(data.body);
-      //     const newStocks = dataJson.map(
-      //       (d: { StockDto: any; StockConcurrentPriceDtos: any[] }) => ({
-      //         ...d.StockDto,
-      //         ...d.StockConcurrentPriceDtos[0],
-      //       })
-      //     );
-
-      //     const newRows = newStocks.map((n: any) => ({
-      //       stock_info: new StockInfo(newStocks),
-      //       page: "home",
-      //       spacing: 2,
-      //     }));
-
-      //     setTableRows(newRows);
-      //   });
-      // };
-
-      // stompClient.activate()
+      stompClient.activate()
     }
   }, [fetchData, STOCK_HOME_PAGE]);
 

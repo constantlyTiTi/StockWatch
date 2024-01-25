@@ -3,7 +3,7 @@ const stockService = require('../../services/v1/stockService.js')
 
 exports.getAllStockDetails = async (req,res)=> {
     try{
-        res.send(await stockService.getAllStockDetailsService())
+        res.send(await stockService.getAllStockDetailsService(req.query.country))
         
     }
     catch(error){

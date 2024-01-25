@@ -2,10 +2,10 @@ const mockData = require('../../mock-data/stock-mock-data.json')
 const axios = require('axios');
 const stockAPI = require('../../const/v1/stockAPIs.js')
 
-exports.getAllStockDetailsService = async () => {
+exports.getAllStockDetailsService = async (country) => {
 
     const res = await axios
-        .get(stockAPI.ALL_STOCKS_DETAILS)
+        .get(stockAPI.ALL_STOCKS_DETAILS + country)
         .then(response => {
             console.log("api",response)
             return {all_stock_details:response.data}

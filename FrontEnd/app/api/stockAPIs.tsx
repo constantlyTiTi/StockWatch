@@ -3,10 +3,10 @@ import axios from "axios";
 import {GET_ALL_STOCK,GET_STOCK_BY_SYMBOL, GET_STOCKS_CURRENT_PRICE} from './stockURLs'
 import httpConfig from '../config/config-http.json'
 
-export const getAllStockInfo = () =>{
+export const getAllStockInfo = (country:string) =>{
   
   const response = 
-    axios.get(GET_ALL_STOCK,{
+    axios.get(GET_ALL_STOCK + country,{
       headers:httpConfig.headers
     })
 
@@ -47,10 +47,10 @@ export const getStocksWithPrices = () =>{
 
 }
 
-export const getStockBySymbol = async (symbol:string) =>{
+export const getStockBySymbol = (symbol:string) =>{
   
   const response = 
-    await axios.get(GET_STOCK_BY_SYMBOL+symbol,{
+     axios.get(GET_STOCK_BY_SYMBOL+symbol,{
       headers:httpConfig.headers
     })
 

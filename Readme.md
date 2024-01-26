@@ -8,7 +8,7 @@ Constructed a dynamic frontend utilizing Next.js, Node.js, and WebSocket technol
 Implemented real-time data retrieval from third-party APIs, enhancing the application's ability to provide up-to-the-minute information for an improved user experience.
 
 ## Limitation
-There are limitation of API per second since it is using free real time data API. Right now, only 8 Stocks are supported.
+There are limitations of API per second since it is using free real time data API. Right now, only 8 Stocks are supported.
 
 ## Run locally
 ### back-end:

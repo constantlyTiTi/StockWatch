@@ -47,7 +47,7 @@ public class KafkaProducerService {
             }
             try{
                 Flux<StockWithPricesDto> stockPriceAndInfoList = Flux.fromIterable(symbols).flatMap(sy ->
-                        externalStockAPI.getStockBySymbol(sy)
+                        externalStockAPI.getStockCurrentPriceBySymbol(sy)
                                 .map(response -> StockWithPricesDto.builder()
                                         .stockDto(StockDto.builder().symbol(sy).build())
                                         .stockPriceDtos(List.of(response))

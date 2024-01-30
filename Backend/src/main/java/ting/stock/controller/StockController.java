@@ -1,14 +1,18 @@
 package ting.stock.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import ting.stock.dto.CompanyNewsDto;
 import ting.stock.dto.StockDto;
 import ting.stock.dto.StockPriceDto;
 import ting.stock.dto.StockWithPricesDto;
 import ting.stock.services.ExternalStockAPI;
 import ting.stock.services.StockService;
 
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,7 +26,7 @@ public class StockController {
 
     @GetMapping("/quote")
     public StockPriceDto getAllStockBySymbol(@RequestParam String symbol){
-        Mono<StockPriceDto> stockCurrentPrice = externalStockAPI.getStockBySymbol(symbol);
+        Mono<StockPriceDto> stockCurrentPrice = externalStockAPI.getStockCurrentPriceBySymbol(symbol);
         return stockCurrentPrice.block();
     }
 
@@ -41,6 +45,16 @@ public class StockController {
     @GetMapping("/quotes")
     public List<StockWithPricesDto> getStocksWithPrices(){
         return stockService.getStockWithCurrentPrice();
+    }
+
+    @GetMapping("/company_news")
+    public List<CompanyNewsDto> getCompanyNewsBySymbol(@RequestParam String symbol,
+                                                       @RequestParam(name = "from") @DateTimeFormat(pattern = "yyyy/MM/dd") Date from,
+                                                       @RequestParam(name = "to") @DateTimeFormat(pattern = "yyyy/MM/dd") Date to){
+        List<CompanyNewsDto> result = externalStockAPI.getCompanyNewsBySymbol(symbol,
+                from.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+                to.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()).block();
+        return result;
     }
 
 }

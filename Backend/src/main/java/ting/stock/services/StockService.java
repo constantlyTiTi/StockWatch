@@ -53,7 +53,7 @@ public class StockService {
             symbols = stocks.stream().map(StockDto::getSymbol).sorted().toList().subList(0,8);
         }
         Flux<StockWithPricesDto> stockPriceAndInfoList = Flux.fromIterable(symbols).flatMap(sy ->
-                externalStockAPI.getStockBySymbol(sy)
+                externalStockAPI.getStockCurrentPriceBySymbol(sy)
                         .map(response -> StockWithPricesDto.builder()
                                 .stockDto(StockDto.builder().symbol(sy).build())
                                 .stockPriceDtos(List.of(response))

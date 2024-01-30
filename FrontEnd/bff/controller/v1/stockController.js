@@ -13,7 +13,7 @@ exports.getAllStockDetails = async (req,res)=> {
 
 exports.getHistoryPricesBySymbol = async (req,res)=> {
     try{
-        res.send(await stockService.getHistoryPricesBySymbol(req.symbol))
+        res.send(await stockService.getHistoryPricesBySymbol(req.query.symbol))
         
     }
     catch(error){
@@ -24,6 +24,18 @@ exports.getHistoryPricesBySymbol = async (req,res)=> {
 exports.getStocksWithCurrentPrice = async (req,res)=> {
     try{
         res.send(await stockService.getStocksWithCurrentPriceService())
+        
+    }
+    catch(error){
+        return "error"
+    }
+}
+
+exports.getCompanyNewsBySymbol = async (req, res) => {
+    console.log("getCompanyController")
+    console.log(req)
+    try{
+        res.send(await stockService.getCompanyNewsBySymbol(req.query.symbol, req.query.from, req.query.to))
         
     }
     catch(error){

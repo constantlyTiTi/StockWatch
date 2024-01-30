@@ -4,7 +4,8 @@ const router = express.Router();
 
 router.get("/all_stocks", stockController.getAllStockDetails)
 router.get("/all_stocks_price", stockController.getStocksWithCurrentPrice)
-router.get("/history_prices?symbol=:symbol", stockController.getHistoryPricesBySymbol)
-router.get("/symbols?country=:country", stockController.getHistoryPricesBySymbol)
+// router.get("/history_prices", stockController.getHistoryPricesBySymbol)
+// router.get("/symbols", stockController.getHistoryPricesBySymbol)
+router.get("/company_news", stockController.getCompanyNewsBySymbol)
 
 module.exports = router;

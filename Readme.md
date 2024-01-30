@@ -8,7 +8,9 @@ Constructed a dynamic frontend utilizing Next.js, Node.js, and WebSocket technol
 Implemented real-time data retrieval from third-party APIs, enhancing the application's ability to provide up-to-the-minute information for an improved user experience.
 
 ## Limitation
-There are limitations of API per second since it is using free real time data API. Right now, only 8 Stocks are supported.
+1. There are limitations of API per second since it is using free real time data API. Right now, only 8 Stocks are supported.
+2. The Company news can be retrieved from search box by Symbol (retrieve last 5 months news)
+
 
 ## Run locally
 ### back-end:

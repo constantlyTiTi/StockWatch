@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import { Container } from "@mui/material"
 
 export default function StockLayout({
   children, // will be a page or nested layout
@@ -6,8 +6,8 @@ export default function StockLayout({
   children: React.ReactNode
 }) {
   return (
-    <Box component="section"  sx={{ p: 2}}>
+    <Container fixed sx={{ p: 2}}>
       {children}
-    </Box>
+    </Container>
   )
 }

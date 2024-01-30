@@ -1,7 +1,8 @@
 import { StockInfo } from "@/app/Interfaces/table/StockInfoInterface";
 import axios from "axios";
-import {GET_ALL_STOCK,GET_STOCK_BY_SYMBOL, GET_STOCKS_CURRENT_PRICE} from './stockURLs'
+import {GET_ALL_STOCK,GET_COMPANY_NEWS_BY_SYMBOL,GET_STOCK_BY_SYMBOL, GET_STOCKS_CURRENT_PRICE} from './stockURLs'
 import httpConfig from '../config/config-http.json'
+import { StockCompanyNews, StockCompanyNewsInterface } from "../Interfaces/table/StockCompanyNewsInterface";
 
 export const getAllStockInfo = (country:string) =>{
   
@@ -67,26 +68,23 @@ export const getStockBySymbol = (symbol:string) =>{
 
 }
 
-// export const getStockPricesBySymbolAndDate = async (symbol:string, datetime:string) =>{
-  
-//   const response = 
-//     await axios.get(GET_STOCK_PRICES_BY_SYMBOL_AND_DATE,{
-//       headers:httpConfig.headers
-//     })
+export const getCompanyNewsBySymbol = (symbol: string, from:Date, to:Date) =>{
+  console.log(`${GET_COMPANY_NEWS_BY_SYMBOL}?symbol=${symbol}&from=${from.toLocaleDateString()}&to=${to.toLocaleDateString()}`)
+  const response = 
+     axios.get(`${GET_COMPANY_NEWS_BY_SYMBOL}?symbol=${symbol}&from=${from.toLocaleDateString()}&to=${to.toLocaleDateString()}`,{
+      headers:httpConfig.headers
+    })
+    .then((res) => {
+      const news = res.data.map((r:StockCompanyNews) => new StockCompanyNews(r))
+      return news
 
-//     .then((res) => {
-//       const stock = res.data as StockPriceInterface
-//       console.log("fe stock",symbol)
-//       return stock
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
-//     })
-//     .catch((error) => {
-//       console.log("fe-error",error)
-//       return error
-//     })
-
-//     return response
-
-// }
+    return response
+}
 
 

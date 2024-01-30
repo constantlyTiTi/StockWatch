@@ -136,18 +136,8 @@ const HeaderSearchBar = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ bgcolor: "green" }}>
+      <AppBar component="nav" sx={{ bgcolor: "green"}} position="fixed" >
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
@@ -185,7 +175,6 @@ const HeaderSearchBar = () => {
           </Search>
         </Toolbar>
       </AppBar>
-    </Box>
   );
 };
 

@@ -1,8 +1,7 @@
 package ting.stock.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Level;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class KafkaProducerService {
     private final KafkaTemplate<String, List<StockDto>> kafkaProducerSymbolsTemplate;
     private final KafkaTemplate<String, List<StockWithPricesDto>> kafkaProducerStocksTemplate;
@@ -58,7 +57,7 @@ public class KafkaProducerService {
 
                 kafkaProducerStocksTemplate.send(topicConfiguration.getStock(),result);
             }catch (OverLimitedRequestsException e){
-                log.log(Level.INFO, e);
+                log.info(e.getMessage());
             }
 
         }

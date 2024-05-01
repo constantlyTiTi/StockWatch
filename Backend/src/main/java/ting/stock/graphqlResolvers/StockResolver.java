@@ -21,14 +21,12 @@ public class StockResolver {
     public Stock createStock(@Argument Stock stock){
         Optional<Stock> stock_db = stockRepository.getStockBySymbol(stock.getSymbol());
         stock_db.ifPresent(value -> stock.setId(value.getId()));
-        stockRepository.save(stock);
-        return stock;
+        return stockRepository.save(stock);
     }
 
     @MutationMapping
     public List<Stock> createBulkStocks(@Argument List<Stock> stocks){
-        stockRepository.saveAll(stocks);
-        return stocks;
+        return stockRepository.saveAll(stocks);
     }
 
     @SchemaMapping

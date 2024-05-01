@@ -46,7 +46,6 @@ exports.getHistoryPricesBySymbol = async (symbol) => {
 
 exports.getCompanyNewsBySymbol = async (symbol, from, to) => {
 
-    console.log(`${stockAPI.GET_COMPANY_NEWS_BY_SYMBOL}?symbol=${symbol}&from=${from}&to=${to}`)
     const res = await axios
         .get(`${stockAPI.GET_COMPANY_NEWS_BY_SYMBOL}?symbol=${symbol}&from=${from}&to=${to}`)
         .then(response => {

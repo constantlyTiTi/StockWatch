@@ -12,7 +12,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { PostComment } from "@/app/Interfaces/post/PostCommentRow";
+import { PostComment } from "@/Interfaces/post/PostCommentRow";
+
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;

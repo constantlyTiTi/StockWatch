@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import ting.stock.aop.LogAOP;
 import ting.stock.configuration.ExternalAPIIntegration;
 import ting.stock.configuration.TopicConfiguration;
 import ting.stock.dto.StockDto;
@@ -16,6 +17,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@LogAOP
 public class KafkaProducerService {
     private final KafkaTemplate<String, List<StockDto>> kafkaProducerSymbolsTemplate;
     private final KafkaTemplate<String, List<StockWithPricesDto>> kafkaProducerStocksTemplate;

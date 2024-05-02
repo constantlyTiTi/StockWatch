@@ -8,6 +8,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import ting.stock.aop.LogAOP;
 import ting.stock.configuration.ExternalAPIIntegration;
 import ting.stock.dto.CompanyNewsDto;
 import ting.stock.dto.StockDto;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@LogAOP
 public class ExternalStockAPI {
 
     private WebClient stockExternalApi;

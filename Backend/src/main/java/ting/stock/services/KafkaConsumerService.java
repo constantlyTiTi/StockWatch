@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import ting.stock.aop.LogAOP;
 import ting.stock.configuration.TopicConfiguration;
 import ting.stock.dao.Stock;
 import ting.stock.dao.StockDailyPrice;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @ConfigurationProperties
+@LogAOP
 public class KafkaConsumerService {
 
     private final StockResolver stockResolver;

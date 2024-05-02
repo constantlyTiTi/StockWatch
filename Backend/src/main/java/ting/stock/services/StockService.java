@@ -3,6 +3,7 @@ package ting.stock.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import ting.stock.aop.LogAOP;
 import ting.stock.configuration.ExternalAPIIntegration;
 import ting.stock.dao.Stock;
 import ting.stock.dao.StockDailyPrice;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@LogAOP
 public class StockService {
     //pending handle transaction
     private final StockResolver stockResolver;

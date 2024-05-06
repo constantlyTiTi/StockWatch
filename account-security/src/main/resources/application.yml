@@ -11,10 +11,10 @@ spring:
   h2:
     console.enabled: true
     path: /h2-console
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 40841952048-8t8fjmrgkqoa0votm5t3jf80j4ccj202.apps.googleusercontent.com
-            client-secret: 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
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 40841952048-8t8fjmrgkqoa0votm5t3jf80j4ccj202.apps.googleusercontent.com
+#            client-secret: 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

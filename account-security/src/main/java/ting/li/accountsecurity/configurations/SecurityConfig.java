@@ -1,32 +1,43 @@
 package ting.li.accountsecurity.configurations;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import ting.li.accountsecurity.services.AccountAuthenticationProvider;
 import ting.li.accountsecurity.services.AccountDetailService;
 
 @Configuration
-@EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
+    private final AccountAuthenticationProvider accountAuthenticationProvider;
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, AccountDetailService userDetailService)
             throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
+        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.authenticationProvider(accountAuthenticationProvider)
                 .userDetailsService(userDetailService)
-                .passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .build();
+                .passwordEncoder(bCryptPasswordEncoder);
+        return builder.build();
     }
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-//        return http.c
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(request -> request
+                        .requestMatchers("/posts/create").hasAuthority("post_write")
+                        .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("/stock/**","/signup","/posts/**","/login").permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .build();
+    }
 }

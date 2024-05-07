@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import ting.li.accountsecurity.services.AccountAuthenticationProvider;
 import ting.li.accountsecurity.services.AccountDetailService;
 
@@ -19,6 +21,7 @@ import ting.li.accountsecurity.services.AccountDetailService;
 @AllArgsConstructor
 public class SecurityConfig {
     private final AccountAuthenticationProvider accountAuthenticationProvider;
+    private final JwtAthFilter jwtAthFilter;
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, AccountDetailService userDetailService)
             throws Exception {
@@ -37,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers("/stock/**","/signup","/posts/**","/login").permitAll()
                         .anyRequest()
                         .authenticated())
-                .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class)
+                .securityContext(sc -> sc.securityContextRepository(new RequestAttributeSecurityContextRepository()))
                 .build();
     }
 }

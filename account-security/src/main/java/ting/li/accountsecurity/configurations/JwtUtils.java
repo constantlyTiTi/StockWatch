@@ -24,6 +24,10 @@ public class JwtUtils {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    public String extractRoleFromJwtToken(String token){
+        return extractAllClaims(token).get("role",String.class);
+    }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ting.li.accountsecurity.dao.Account;
+import ting.li.accountsecurity.enums.AccountStatus;
 
 import java.util.Collection;
 
@@ -17,12 +18,12 @@ public class AccountPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return account.getUserName();
     }
 
     @Override
@@ -32,7 +33,7 @@ public class AccountPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return account.getAccountStatus() != AccountStatus.BLOCKED;
     }
 
     @Override

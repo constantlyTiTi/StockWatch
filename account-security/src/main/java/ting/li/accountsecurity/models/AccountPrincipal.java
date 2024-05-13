@@ -3,14 +3,14 @@ package ting.li.accountsecurity.models;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ting.li.accountsecurity.dao.Account;
+import ting.li.accountsecurity.dao.AccountInfo;
 import ting.li.accountsecurity.enums.AccountStatus;
 
 import java.util.Collection;
 
 @AllArgsConstructor
 public class AccountPrincipal implements UserDetails {
-    private final Account account;
+    private final AccountInfo account;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

@@ -5,24 +5,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ting.li.accountsecurity.services.AccountAuthenticationProvider;
 import ting.li.accountsecurity.services.AccountDetailService;
 
@@ -55,13 +51,18 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(request -> request
                         .requestMatchers("/posts/create").hasAuthority("post_write")
                         .requestMatchers("/user/**").hasAuthority("USER")
-                        .requestMatchers("/stock/**","/signup","/posts/**","/login").permitAll()
+                        .requestMatchers("/stock/**","/signup","/posts/**","/login/**").permitAll()
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest()
                         .authenticated())
+                .headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .csrf(csrf->csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
                 .formLogin(fl -> fl.loginPage("/login.html")
                         .loginProcessingUrl("login")
                         .successHandler(authenticationSuccessHandler())
                         .failureUrl("/login.html?error=true"))
+                .rememberMe(rm -> rm.key("uniqueAndSecret").tokenValiditySeconds(86400))
+                .logout(logout -> logout.deleteCookies("JSESSIONID"))
                 .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

@@ -1,3 +1,8 @@
+auth:
+  baseurl: tbd
+  login:
+    endpoint: tbd
+
 spring:
   application:
     name: account-security
@@ -9,7 +14,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
   h2:
-    console.enabled: true
+    console:
+      enabled: true
     path: /h2-console
 #  security:
 #    oauth2:

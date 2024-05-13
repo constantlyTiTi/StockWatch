@@ -6,14 +6,14 @@ import ting.li.accountsecurity.enums.AccountStatus;
 
 import java.util.UUID;
 
-@Entity
-@Table(name="Account")
+@Entity(name="account_info")
+@Table(name="account_info")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account {
+public class AccountInfo {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,8 +23,10 @@ public class Account {
 
     @Column(name="password")
     private String password;
+
     @Column(name="user_name")
     private String userName;
+
     @Column(name="account_status")
     private AccountStatus accountStatus;
 
